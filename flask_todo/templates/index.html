@@ -4,4 +4,8 @@
 
 {% block content %}
 
+{% if result is not none %}
+<p class="submitted">The Todo is: {{ todo }}</p>
+{% endif %}
+
 {% endblock %}

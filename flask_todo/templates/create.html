@@ -3,5 +3,19 @@
 {% block title %}Create a Todo{% endblock %}
 
 {% block content %}
+<p>This is where you add a Todo to your list</p>
+
+<form method="post">
+  <label>
+    Add a Todo:
+    <input type="text" name="todo" value="{{ todo }}" id="todo">
+  </label>
+
+    <input type="submit" name="" value="Submit Todo" id="">
+</form>
+
+{% if result is not none %}
+<p id="submitted">{{ todo }}</p>
+{% endif %}
 
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask import Flask, request, make_response, render_template
 
+import datetime
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
@@ -17,9 +18,20 @@ def create_app(test_config=None):
     def index():
         return render_template('index.html')
 
-    @app.route('/create')
+    @app.route('/create', methods=['GET', 'POST'])
     def create():
-        return render_template('create.html')
+        if request.method == 'GET':
+            return render_template('create.html')
+        elif request.method == 'POST':
+            lists = open("todos.txt", "a")
+            todo = request.form['todo']
+            if not todo:
+                return 'You need to add a Todo'
+            lists.write(todo), lists.write(' '),  lists.write(str(datetime.datetime.now())), lists.write(' '), lists.write('Not Completed'), lists.write('\n')
+            lists.close()
+
+
+        return render_template('create.html', todo=todo)
 
     @app.route('/update')
     def update():
