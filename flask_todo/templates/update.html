@@ -3,5 +3,17 @@
 {% block title %}Update to Completed{% endblock %}
 
 {% block content %}
+<p>This is where you update your Todo list to complete</p>
+
+<form method="post">
+  <label>
+    Update a Todo:
+    <input type="text" name="todo" value="{{ todo }}" id="todo">
+  </label>
+
+    <input type="submit" name="" value="Update Todo" id="">
+</form>
+
+<p id="submitted">Completed Task: {{ todo }}</p>
 
 {% endblock %}
