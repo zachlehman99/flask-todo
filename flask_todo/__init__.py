@@ -63,6 +63,7 @@ def create_app(test_config=None):
                     if not todo in i:
                         lists.write(i)
                 lists.truncate()
+                lists.write('Completed '), lists.write(todo), lists.write(' '), lists.write(str(datetime.datetime.now())), lists.write(' '), lists.write('\n')
                 lists.close()
         return render_template('update.html', todo=todo)
 

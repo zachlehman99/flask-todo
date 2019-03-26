@@ -2,7 +2,7 @@
 
 1. You can first fork then clone the repository
 
-2. Then you can make you own virtual environment with     python3 -m venv <name>
+2. Then you can make you own virtual environment with     python3 -m venv &lt;name&gt;
 
 3. Activate the environment     source venv/bin/activate
 
