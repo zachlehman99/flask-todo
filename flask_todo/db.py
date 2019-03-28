@@ -1,22 +1,21 @@
-# from flask import Flask, request, make_response, render_template
-# import click
-# from flask import current_app, g
-# from flask.cli import with_appcontext
-
 # import psycopg2
+# from psycopg2 import Error
 #
-# try:
-#     conn = psycopg2.connect("dbname='todo_app'")
-#     print("We Done it!")
-# except:
-#     print("You have an error")
-#
-#
-# cur = conn.cursor()
-# cur.execute("SELECT *")
-# zach = cur.fetchall()
-# print(zach)
-# conn.close()
-
-# with open('index.html', 'a') as post:
-#     cur.copy_expert(outputquery, post)
+# def first():
+#     try:
+#         conn = psycopg2.connect(database = "todo_app")
+#         cur = connection.cursor()
+#         create_table_query = '''CREATE TABLE todos
+#             (created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+#             todo           TEXT    NOT NULL,
+#             completed         BOOLEAN NOT NULL); '''
+#         cur.execute(create_table_query)
+#         conn.commit()
+#         print("Table was created")
+#     except (Exception, psycopg2.DatabaseError) as error :
+#         print ("Don't do that", error)
+#     finally:
+#         if(connection):
+#             cur.close()
+#             conn.close()
+#             print("Connection is closed")
