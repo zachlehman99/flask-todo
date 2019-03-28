@@ -4,7 +4,8 @@
 
 {% block content %}
 <p>Welcome to the Todo Manager</p>
-<ul>
-  <li>{{ post }}</li>
-</ul>
+<!-- Some sort of loop to split up the different todos? -->
+{% for result in post %}
+  <li><input type="radio" name="" value="">{{ result }}</li>
+{% endfor %}
 {% endblock %}

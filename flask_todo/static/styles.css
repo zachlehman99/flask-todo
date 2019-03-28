@@ -8,7 +8,7 @@ a, li {
   color: orange;
   font-size: 25px;
   padding: 25px;
-  margin: 50px;
+  margin: 25px;
 
 }
 
@@ -24,4 +24,8 @@ p {
 
 h1 {
   font-size: 50px;
+}
+
+input[type="radio"]:checked{
+    visibility:hidden;
 }

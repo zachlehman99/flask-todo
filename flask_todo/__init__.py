@@ -10,6 +10,8 @@ def create_app(test_config=None):
 
     app.config.from_mapping(
         SECRET_KEY='dev',
+        # DB_NAME
+        # DB_USER
     )
 
     if test_config is None:
@@ -25,7 +27,9 @@ def create_app(test_config=None):
         cur = conn.cursor()
         cur.execute('''SELECT * FROM todos''')
         post = cur.fetchall()
+        cur.close()
         conn.close()
+        print('Closed')
         return render_template('index.html', post=post)
 
 
@@ -36,7 +40,7 @@ def create_app(test_config=None):
             todo = request.form['todo']
             conn = psycopg2.connect(database = "todo_app")
             cur = conn.cursor()
-            cur.execute(f''' INSERT INTO todos (todo,completed) VALUES ('{todo}',FALSE);''')
+            cur.execute("INSERT INTO todos (todo,completed) VALUES (%s, %s)", (todo, False))
             conn.commit()
             print('-' * 20)
             print("Sent")
@@ -47,31 +51,46 @@ def create_app(test_config=None):
             print("Closed")
             print('-' * 20)
 
-            return render_template('index.html', todo=todo)
+            return render_template('create.html', todo=todo)
         return render_template('create.html')
 
 
     @app.route('/update', methods=['GET', 'POST'])
     def update():
-        if request.method == 'GET':
-            return render_template('update.html')
-        elif request.method == 'POST':
-            lists = open("todo.txt", "r+")
+        if request.method == 'POST':
             todo = request.form['todo']
-            reading = lists.read()
-            if todo == '':
-                lists.close()
-                return render_template('update.html')
-            else:
-                lists = open("todo.txt", "r+")
-                file_text = lists.readlines()
-                lists.seek(0)
-                for i in file_text:
-                    if not todo in i:
-                        lists.write(i)
-                lists.truncate()
-                lists.write('Completed '), lists.write(todo), lists.write(' '), lists.write(str(datetime.datetime.now())), lists.write(' '), lists.write('\n')
-                lists.close()
-        return render_template('update.html', todo=todo)
+            conn = psycopg2.connect(database = "todo_app")
+            cur = conn.cursor()
+            cur.execute("UPDATE todos SET completed=(%s) WHERE todo=(%s)", (True, todo))
+            conn.commit()
+            print('-' * 20)
+            print("Sent")
+            print('-' * 20)
+            cur.close()
+            conn.close()
+            print('-' * 20)
+            print("Closed")
+            print('-' * 20)
+            return render_template('update.html', todo=todo)
+        return render_template('update.html')
+
+    @app.route('/delete', methods=['GET', 'POST'])
+    def delete():
+        if request.method == 'POST':
+            todo = request.form['todo']
+            conn = psycopg2.connect(database = "todo_app")
+            cur = conn.cursor()
+            cur.execute("DELETE FROM todos WHERE todo=(%s)", (todo))
+            conn.commit()
+            print('-' * 20)
+            print("Sent")
+            print('-' * 20)
+            cur.close()
+            conn.close()
+            print('-' * 20)
+            print("Closed")
+            print('-' * 20)
+            return render_template('delete.html', todo=todo)
+        return render_template('delete.html')
 
     return app
